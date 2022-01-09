@@ -1,74 +1,67 @@
+// GIVEN I need a new, secure password
 // WHEN I click the button to generate a password
-var generateBtn = document.querySelector("#generate");
-generateBtn.addEventListener("click", writePassword);
-
 // THEN I am presented with a series of prompts for password criteria
-function generatePassword() {
-
 // WHEN prompted for password criteria
 // THEN I select which criteria to include in the password
 // WHEN prompted for the length of the password
 // THEN I choose a length of at least 8 characters and no more than 128 characters
-var passwordLength = prompt("Password must be at least 8 characters and no more than 128 characters");
-
 // WHEN asked for character types to include in the password
 // THEN I confirm whether or not to include lowercase, uppercase, numeric, and/or special characters
-var passwordLowercase = prompt("password must contain at least lowercase character ")
-var passwordUppercase = prompt("password must contain at least one Uppercase character")
-var passwordNumeric = prompt("password mustt contain at least one number")
-var passwordSpecial = prompt("password must contain at least one special character such as: !@#$%^&*()_+-=")
-
 // WHEN I answer each prompt
-
-
 // THEN my input should be validated and at least one character type should be selected
-
-
 // WHEN all prompts are answered
-
-
 // THEN a password is generated that matches the selected criteria
-
-
 // WHEN the password is generated
+// THEN the password is either displayed in an alert or written to the page
+// ------------------------------------------------------------------------
+
+// Arrays
+var lowercaseList = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+var uppercaseList = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+var numbersList = ["1","2","3","4","5","6","7","8","9","0"];
+var specialList = ["!","@","#","$","%","^","&","*","(",")","?"];
+
+// choices
+var choices;
+
+// Get references to the #generate element
+var generateBtn = document.querySelector("#generate");
+// Add event listener to generate button
+generateBtn.addEventListener("click", writePassword);
+
+
+function generatePassword() {
+var passwordLength = prompt("How many characters would you like your password to have? Choose between 8 and 20.")
+if (passwordLength < 8 || passwordLength > 20){
+  alert("error: refresh page.")
+} else {
+  var confirmLowercase = confirm("Will your password contain lowercase letters?");
+  var confirmUppercase = confirm("Will your password contain uppercase letters?");
+  var confirmNumber = confirm("will your password contain numbers?");
+  var confirmSpecial = confirm("will your password contain special characters? (ex:!@#$%)");
+}
+
+//Confirms
+// Cancel was selected on all 4 confirms
+if (!confirmLowercase && !confirmUppercase && !confirmNumber && !confirmSpecial){
+  alert("error: No criteria selected. Refresh the page.")
+}
+// Okay was selected on all 4 confirms
+else if (confirmLowercase && confirmUppercase && confirmNumber && confirmSpecial) {
 
 }
-// THEN the password is either displayed in an alert or written to the page
+
+
+
+}
+
+
+// Write password to the #password input
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

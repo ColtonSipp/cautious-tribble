@@ -92,5 +92,3 @@ function writePassword() {
   var passwordText = document.querySelector("#password");
   passwordText.value = password;
 }
-
-console.log("This was very hard")

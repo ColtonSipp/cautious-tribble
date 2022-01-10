@@ -21,6 +21,14 @@ var uppercaseList = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
 var numbersList = ["1","2","3","4","5","6","7","8","9","0"];
 var specialList = ["!","@","#","$","%","^","&","*","(",")","?"];
 
+//Variables to be updated
+var enter;
+var confirmNumber;
+var confirmSpecial;
+var confirmUppercase;
+var confirmLowercase;
+var character;
+
 
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
@@ -29,70 +37,70 @@ generateBtn.addEventListener("click", writePassword);
 
 
 function generatePassword() {
-var passwordLength = prompt("How many characters would you like your password to have? Choose between 8 and 20.")
-if (passwordLength < 8 || passwordLength > 20){
-  alert("error: refresh page.")
-} else {
+  var passwordLength = prompt("How many characters would you like your password to have? Choose between 8 and 20.")
+  if (passwordLength < 8 || passwordLength > 20){
+    alert("error: refresh page.")
+  } else {
   var confirmLowercase = confirm("Will your password contain lowercase letters?");
   var confirmUppercase = confirm("Will your password contain uppercase letters?");
   var confirmNumber = confirm("will your password contain numbers?");
   var confirmSpecial = confirm("will your password contain special characters? (ex:!@#$%)");
-}
+  }
 
 
-//Confirms
-// Cancel was selected on all 4 confirms
+  //Confirms
+  // Cancel was selected on all 4 confirms
   if (!confirmLowercase && !confirmUppercase && !confirmNumber && !confirmSpecial){
     alert("error: No criteria selected. Refresh the page.")
   }
   // Okay was selected on all 4 confirms
   else if (confirmLowercase && confirmUppercase && confirmNumber && confirmSpecial) {
-    choices = character.concat(lowercaseList,uppercaseList,numbersList,specialList);
+    var choices = character.concat(lowercaseList,uppercaseList,numbersList,specialList);
   }
-// Okay was selected on 3/4 confirms
+  //Okay was selected on 3/4 confirms
   else if (confirmUppercase && confirmNumber && confirmSpecial) {
-    choices = character.concat(uppercaseList,lowercaseList,specialList);
+    var choices = character.concat(uppercaseList,lowercaseList,specialList);
   }
   else if (confirmLowercase && confirmNumber && confirmSpecial) {
-    choices = character.concat(lowercaseList,numbersList,specialList);
+    var choices = character.concat(lowercaseList,numbersList,specialList);
   }
   else if (confirmLowercase && uppercaseList && specialList) {
-    choices = character.concat(lowercaseList,uppercaseList,specialList);
+    var choices = character.concat(lowercaseList,uppercaseList,specialList);
   }
   else if (confirmLowercase && confirmUppercase && confirmNumber){
-    choices = character.concat(lowercaseList,uppercaseList,numbersList);
+    var choices = character.concat(lowercaseList,uppercaseList,numbersList);
   }
-// Okay was selected on 2/4 confirms
+  // Okay was selected on 2/4 confirms
   else if (confirmNumber && confirmSpecial){
-    choices = character.concat(numbersList,specialList);
+    var choices = character.concat(numbersList,specialList);
   }
   else if (confirmLowercase && confirmSpecial) {
-    choices = character.concat(lowercaseList,specialList);
+    var choices = character.concat(lowercaseList,specialList);
   }
   else if (confirmSpecial && confirmUppercase){
-    choices = character.concat(specialList,uppercaseList);
+    var choices = character.concat(specialList,uppercaseList);
   }
   else if (confirmLowercase && confirmNumber){
-    choices = character.concat(lowercaseList,numbersList);
+    var choices = character.concat(lowercaseList,numbersList);
   }
   else if (confirmLowercase && confirmUppercase){
-    choices = character.concat(lowercaseList,uppercaseList);
+    var choices = character.concat(lowercaseList,uppercaseList);
   }
   else if (confirmNumber && confirmUppercase){
-    choices = character.concat(numbersList,uppercaseList);
+    var choices = character.concat(numbersList,uppercaseList);
   }
-//Okay was selected on 1/4 confirms
+  //Okay was selected on 1/4 confirms
   else if (confirmLowercase){
-    choices = lowercaseList;
+    var choices = lowercaseList;
   }
   else if (confirmUppercase){
-    choices = uppercaseList;
+    var choices = uppercaseList;
   }
   else if (confirmNumber){
-    choices = numbersList;
+    var choices = numbersList;
   }
   else if (confirmSpecial){
-    choices = specialList;
+    var choices = specialList;
   }
    
 }
@@ -104,5 +112,5 @@ if (passwordLength < 8 || passwordLength > 20){
   
      passwordText.value = password;
    }
-  
-  
+
+   console.log (choices)

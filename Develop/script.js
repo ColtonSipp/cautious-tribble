@@ -1,109 +1,95 @@
-// GIVEN I need a new, secure password
-// WHEN I click the button to generate a password
-// THEN I am presented with a series of prompts for password criteria
-// WHEN prompted for password criteria
-// THEN I select which criteria to include in the password
-// WHEN prompted for the length of the password
-// THEN I choose a length of at least 8 characters and no more than 128 characters
-// WHEN asked for character types to include in the password
-// THEN I confirm whether or not to include lowercase, uppercase, numeric, and/or special characters
-// WHEN I answer each prompt
-// THEN my input should be validated and at least one character type should be selected
-// WHEN all prompts are answered
-// THEN a password is generated that matches the selected criteria
-// WHEN the password is generated
-// THEN the password is either displayed in an alert or written to the page
-// ------------------------------------------------------------------------
 
-// Arrays
-var lowercaseList = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-var uppercaseList = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-var numbersList = ["1","2","3","4","5","6","7","8","9","0"];
-var specialList = ["!","@","#","$","%","^","&","*","(",")","?"];
+//GIVEN I need a new, secure password
+//WHEN I click the button to generate a password
+//THEN I am presented with a series of prompts for password criteria
+//WHEN prompted for password criteria
+//THEN I select which criteria to include in the password
+//WHEN prompted for the length of the password
+//THEN I choose a length of at least 8 characters and no more than 128 characters
+//WHEN asked for character types to include in the password
+//THEN I confirm whether or not to include lowercase, uppercase, numeric, and/or special characters
+//WHEN I answer each prompt
+//THEN my input should be validated and at least one character type should be selected
+//WHEN all prompts are answered
+//THEN a password is generated that matches the selected criteria
+//WHEN the password is generated
+//THEN the password is either displayed in an alert or written to the page
+//------------------------------------------------------------------------
 
-//Variables to be updated
-var enter;
-var confirmNumber;
-var confirmSpecial;
-var confirmUppercase;
-var confirmLowercase;
-var character;
-
-
-// Get references to the #generate element
+// Assignment Code
 var generateBtn = document.querySelector("#generate");
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
 
 
+// Arrays
+var numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+var upperCase = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+var lowerCase = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+var special = ["!","@","#","$","%","^","&","*","(",")","?"];
+
+// Function responsible for receiving information from prompts
+function questions() {
+  var isValid = false;
+  do {
+    var length = prompt("Choose password length between 8 and 128 characters");
+    var askNumbers = confirm("Do you want your password to include numbers?");
+    var askLowerCase = confirm("Do you want your password to include lower case letters?");
+    var askUpperCase = confirm("Do you want your password to include upper case letters?");
+    var askSpecial = confirm("Do you want your password to include special characters?");
+    var responses = {
+      length: length,
+      askNumbers: askNumbers,
+      askLowerCase: askLowerCase,
+      askUpperCase: askUpperCase,
+      askSpecial: askSpecial
+    } 
+    if((length < 8)||(length > 128))
+    alert("Choose number between 8 and 128");
+    else if((!askNumbers)&&(!askLowerCase)&&(!askUpperCase)&&(!askSpecial))
+    alert("Must choose at least one type.");
+    else
+    isValid = true;
+
+  } while(!isValid);
+  return responses;
+}
+// This function joins all the user responses and then creates the result - a strong password.
 function generatePassword() {
-  var passwordLength = prompt("How many characters would you like your password to have? Choose between 8 and 20.")
-  if (passwordLength < 8 || passwordLength > 20){
-    alert("error: refresh page.")
-  } else {
-  var confirmLowercase = confirm("Will your password contain lowercase letters?");
-  var confirmUppercase = confirm("Will your password contain uppercase letters?");
-  var confirmNumber = confirm("will your password contain numbers?");
-  var confirmSpecial = confirm("will your password contain special characters? (ex:!@#$%)");
-  }
+  var passwordOptions = questions();
+  var possibleCombo = [];
+  var finalPassword = "";
 
 
-  //Confirms
-  // Cancel was selected on all 4 confirms
-  if (!confirmLowercase && !confirmUppercase && !confirmNumber && !confirmSpecial){
-    alert("error: No criteria selected. Refresh the page.")
+  if (passwordOptions.askNumbers) {
+    for (var i of numbers)
+      possibleCombo.push(i);
   }
-  // Okay was selected on all 4 confirms
-  else if (confirmLowercase && confirmUppercase && confirmNumber && confirmSpecial) {
-    var choices = character.concat(lowercaseList,uppercaseList,numbersList,specialList);
+  if (passwordOptions.askLowerCase) {
+    for (var i of lowerCase)
+      possibleCombo.push(i);
   }
-  //Okay was selected on 3/4 confirms
-  else if (confirmUppercase && confirmNumber && confirmSpecial) {
-    var choices = character.concat(uppercaseList,lowercaseList,specialList);
+  if (passwordOptions.askUpperCase) {
+    for (var i of upperCase)
+      possibleCombo.push(i);
   }
-  else if (confirmLowercase && confirmNumber && confirmSpecial) {
-    var choices = character.concat(lowercaseList,numbersList,specialList);
-  }
-  else if (confirmLowercase && uppercaseList && specialList) {
-    var choices = character.concat(lowercaseList,uppercaseList,specialList);
-  }
-  else if (confirmLowercase && confirmUppercase && confirmNumber){
-    var choices = character.concat(lowercaseList,uppercaseList,numbersList);
-  }
-  // Okay was selected on 2/4 confirms
-  else if (confirmNumber && confirmSpecial){
-    var choices = character.concat(numbersList,specialList);
-  }
-  else if (confirmLowercase && confirmSpecial) {
-    var choices = character.concat(lowercaseList,specialList);
-  }
-  else if (confirmSpecial && confirmUppercase){
-    var choices = character.concat(specialList,uppercaseList);
-  }
-  else if (confirmLowercase && confirmNumber){
-    var choices = character.concat(lowercaseList,numbersList);
-  }
-  else if (confirmLowercase && confirmUppercase){
-    var choices = character.concat(lowercaseList,uppercaseList);
-  }
-  else if (confirmNumber && confirmUppercase){
-    var choices = character.concat(numbersList,uppercaseList);
-  }
-  //Okay was selected on 1/4 confirms
-  else if (confirmLowercase){
-    var choices = lowercaseList;
-  }
-  else if (confirmUppercase){
-    var choices = uppercaseList;
-  }
-  else if (confirmNumber){
-    var choices = numbersList;
-  }
-  else if (confirmSpecial){
-    var choices = specialList;
+  if (passwordOptions.askSpecial) {
+    for (var i of special)
+      possibleCombo.push(i);
   }
 
-// End of Function
+  console.log(possibleCombo);
+
+  for (var i = 0; i < passwordOptions.length; i++) {
+    finalPassword += possibleCombo[Math.floor(Math.random() * possibleCombo.length)];
+  }
+  console.log(finalPassword);
+  return finalPassword;
 }
 
-// asdf
+// Write password to the #password input
+function writePassword() {
+  var password = generatePassword();
+  var passwordText = document.querySelector("#password");
+  passwordText.value = password;
+}
